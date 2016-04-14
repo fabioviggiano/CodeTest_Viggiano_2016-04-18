@@ -3,7 +3,12 @@ package tennisgame.model;
 public class Player {
 	
 	private String name;
-	private String surname;
+	private Point point;
+	
+	public Player()
+	{
+		point = new Point();
+	}
 	
 	public String getName() {
 		return name;
@@ -11,11 +16,14 @@ public class Player {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getSurname() {
-		return surname;
+	
+	public void point()
+	{
+		point.increasePoint();
 	}
-	public void setSurname(String surname) {
-		this.surname = surname;
+	
+	public String getPoint()
+	{
+		return point.getName();
 	}
-
 }

@@ -1,8 +1,11 @@
 package tennisgame.controller;
 
+import tennisgame.model.Player;
 import tennisgame.view.Match;
 
 public class Set extends Game {
+	
+	private Player[] players; 
 	
 	public Set() {
 		
@@ -12,5 +15,14 @@ public class Set extends Game {
 	{
 		matchView.start();
 	}
-
+	
+	public void setPlayers(Player[] p)
+	{
+		players = p;
+	}
+	
+	public boolean playSet()
+	{
+		return false;
+	}
 }
