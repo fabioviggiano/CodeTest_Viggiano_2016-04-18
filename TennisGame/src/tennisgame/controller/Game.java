@@ -11,7 +11,7 @@ public class Game {
 
 	public static Match matchView;
 	private static Player players[] = new Player[2];
-	
+
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	// TODO
@@ -46,10 +46,10 @@ public class Game {
 			// Il controller insertNumeberSet ritornerà al game il numero di set da giocare
 			setsInMatch = insertNumberSet();
 		} while (setsInMatch == 0);
-		
 
 
-		
+
+
 		for (int i=0; i<players.length; i++)
 		{
 			players[i] = new Player();
@@ -61,7 +61,7 @@ public class Game {
 		}
 
 		set = new Set[setsInMatch];
-	
+
 		for (int i=0; i<setsInMatch; i++)
 		{
 			System.out.println("Set numero: " + i);
@@ -76,34 +76,46 @@ public class Game {
 				{
 					players[1].point();
 				}
-				
+
+				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
+				{
+					matchView.vantaggio(players[0]);
+				}
+
+				if (players[1].getPoint().toString().equals("forty") && players[0].getPoint().toString().equals("thirty"))
+				{
+					matchView.vantaggio(players[1]);
+				}
+
 				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
 				{
-					System.out.println("Compà!");
+					matchView.deuce();
 				}
-			} while (!players[0].getPoint().toString().equals("forty") || !players[1].getPoint().toString().equals("forty"));
-			
+			} while (players[0].getPoint().toString().equals("forty") || players[1].getPoint().toString().equals("forty"));
+
 			System.out.println("Uscito dal while");
 		}
+
+		matchView.end();
 
 	}
 
 	public static int insertNumberSet()
 	{
-		int n = 0;
+		int n = 1;
 
-		do {
-			try {
-				n = Integer.parseInt(br.readLine());
-				if (n<0 || n>5) {
-					matchView.error("Valore non corretto");
-				}
-			}
-			catch (Exception e)
-			{
-				matchView.error(e);
-			}
-		}	while  (n<0 || n>5);
+		//		do {
+		//			try {
+		//				n = Integer.parseInt(br.readLine());
+		//				if (n<0 || n>5) {
+		//					matchView.error("Valore non corretto");
+		//				}
+		//			}
+		//			catch (Exception e)
+		//			{
+		//				matchView.error(e);
+		//			}
+		//		}	while  (n<0 || n>5);
 
 		return n;
 	}
@@ -111,21 +123,22 @@ public class Game {
 	public static String insertPlayerName() {
 
 		String name = null;
-		
-		try {
-			name = br.readLine();
-		} catch (IOException e) {
-			matchView.error(e);
-		}
+
+		//		try {
+		//			name = br.readLine();
+		//		} catch (IOException e) {
+		//			matchView.error(e);
+		//		}
+		name="prova";
 
 		return name;
 	}
-	
+
 	public static String insertPlayerSurname() {
 
 		try {
 			br.readLine();
-			
+
 		} catch (IOException e) {
 			matchView.error(e);
 		}

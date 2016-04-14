@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import tennisgame.model.Player;
+
 public class Match {
 	
 	// Classe Match - Individuata per le viste da fornire all' utente
@@ -22,7 +24,7 @@ public class Match {
 	// Fine del match
 	public void end()
 	{
-		System.out.println("Partenza");
+		System.out.println("Fine de match");
 	}
 	
 	// Visualizza messaggio di inserimento numero set
@@ -49,5 +51,18 @@ public class Match {
 
 	public void error(Exception e) {
 		System.err.println("Intercettata eccezione: " + e.getMessage());
+	}
+
+	
+	public void deuce() {
+	
+		System.out.println("Siamo in parità (Deuce)! 40-40");
+		
+	}
+	
+	public void vantaggio(Player p) {
+		
+		System.out.println("Vantaggio per " + p.getName());
+		
 	}
 }
