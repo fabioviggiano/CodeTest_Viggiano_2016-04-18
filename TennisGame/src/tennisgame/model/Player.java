@@ -1,8 +1,10 @@
 package tennisgame.model;
 
 public class Player {
+	
 	private String name;
 	private String surname;
+	
 	public String getName() {
 		return name;
 	}
@@ -15,4 +17,5 @@ public class Player {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 }
