@@ -73,7 +73,11 @@ public class Game {
 				{
 					players[1].point();
 				}
-
+				
+//				System.out.println("Giocatore 0: " + players[0].getPoint().toString());
+//				
+//				System.out.println("Giocatore 1: " + players[1].getPoint().toString());
+				
 				// Controllo del vantaggio nel caso spetti al giocatore 0
 				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
 				{
@@ -90,9 +94,37 @@ public class Game {
 				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
 				{
 					matchView.deuce();
-				}
-			} while (players[0].getPoint().toString().equals("forty") || players[1].getPoint().toString().equals("forty"));
 
+					int p = (Math.random()<0.5) ? 0 : 1;
+					if (p==0)
+					{
+						players[0].vantaggio();
+						
+						if (players[0].getVantaggio() - players[1].getVantaggio() == 2)
+						{
+							players[0].setWin(i);
+							System.out.println("Sulla parità ha vinto: " + players[0].getName());
+						}
+						else if (players[1].getVantaggio() - players[0].getVantaggio() == 2)
+						{
+							players[1].setWin(i);
+							System.out.println("Sulla parità ha vinto: " + players[1].getName());
+						}
+						else if (players[0].getVantaggio() == 1 && players[1].getVantaggio() == 1)
+						{
+							players[0].resetVantaggio();
+							players[1].resetVantaggio();
+							System.out.println("Reset della parità");
+						}
+					}
+					else
+					{
+						players[1].point();
+					}
+					
+					
+				}
+			} while (!(players[0].getPoint().toString().equals("forty")) || !(players[1].getPoint().toString().equals("forty")));
 			
 			// Aggiunta condizione vittoria sul vantaggio e parità procrastinata
 			
@@ -109,12 +141,9 @@ public class Game {
 				System.out.println("Set vinto da:  " + players[1].getName());
 				players[1].resetPoint();
 			}
-
-
 		}
 
 		matchView.end();
-
 	}
 
 	public static int insertNumberSet()

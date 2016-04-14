@@ -5,7 +5,7 @@ import tennisgame.view.Match;
 
 public class Set extends Game {
 	
-	private Player[] players; 
+	private Player[] players;
 	
 	public Set() {
 		

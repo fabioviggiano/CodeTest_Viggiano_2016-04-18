@@ -39,6 +39,21 @@ public class Player {
 		return point.getName();
 	}
 	
+	public void vantaggio()
+	{
+		point.increaseVantaggio();
+	}
+	
+	public int getVantaggio()
+	{
+		return point.getVantaggio();
+	}
+	
+	public void resetVantaggio()
+	{
+		point.resetVantaggio();
+	}
+	
 	public void setWin(int i)
 	{
 		win[i] = true;

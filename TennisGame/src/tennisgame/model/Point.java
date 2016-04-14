@@ -10,10 +10,12 @@ public class Point {
 	};
 
 	public int i = 0;
+	private int vantaggio = 0;
 	public Name name = null;
 
 	public Point() {
 		i=0;
+		vantaggio = 0;
 		name = name.love;
 	}
 
@@ -46,10 +48,25 @@ public class Point {
 	public String getName() {
 		return name.toString();
 	}
+	
+	public int getVantaggio()
+	{
+		return vantaggio;
+	}
 
+	public void increaseVantaggio()
+	{
+		vantaggio++;
+	}
+	public void resetVantaggio()
+	{
+		vantaggio=0;
+	}
+	
 	public void resetPoint() {
 		i=0;
 		name = name.love;
+		vantaggio = 0;
 	}
 }
 
