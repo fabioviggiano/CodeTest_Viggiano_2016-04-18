@@ -46,5 +46,10 @@ public class Point {
 	public String getName() {
 		return name.toString();
 	}
+
+	public void resetPoint() {
+		i=0;
+		name = name.love;
+	}
 }
 

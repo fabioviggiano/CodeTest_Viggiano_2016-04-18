@@ -47,9 +47,6 @@ public class Game {
 			setsInMatch = insertNumberSet();
 		} while (setsInMatch == 0);
 
-
-
-
 		for (int i=0; i<players.length; i++)
 		{
 			players[i] = new Player();
@@ -77,23 +74,43 @@ public class Game {
 					players[1].point();
 				}
 
+				// Controllo del vantaggio nel caso spetti al giocatore 0
 				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
 				{
 					matchView.vantaggio(players[0]);
 				}
 
+				// Controllo del vantaggio nel caso spetti al giocatore 1
 				if (players[1].getPoint().toString().equals("forty") && players[0].getPoint().toString().equals("thirty"))
 				{
 					matchView.vantaggio(players[1]);
 				}
 
+				// Controllo in caso d parità
 				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
 				{
 					matchView.deuce();
 				}
 			} while (players[0].getPoint().toString().equals("forty") || players[1].getPoint().toString().equals("forty"));
 
-			System.out.println("Uscito dal while");
+			
+			// Aggiunta condizione vittoria sul vantaggio e parità procrastinata
+			
+			if (players[0].getPoint().toString().equals("forty"))
+			{
+				players[0].setWin(i);
+				System.out.println("Set vinto da:  " + players[0].getName());
+				players[0].resetPoint();
+			}
+			
+			if (players[1].getPoint().toString().equals("forty"))
+			{
+				players[1].setWin(i);
+				System.out.println("Set vinto da:  " + players[1].getName());
+				players[1].resetPoint();
+			}
+
+
 		}
 
 		matchView.end();
