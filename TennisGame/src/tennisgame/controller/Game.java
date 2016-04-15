@@ -7,13 +7,16 @@ import java.io.InputStreamReader;
 import tennisgame.model.*;
 import tennisgame.view.*;
 
-//Tennis Game
-//Implement a simple tennis game
-//Rules:
-//Scores from zero to three points are described as “love”, “fifteen”, “thirty”, and “forty” respectively.
-//If at least three points have been scored by each side and a player has one more point than his opponent, the score of the game is “advantage” for the player in the lead.
-//If at least three points have been scored by each player, and the scores are equal, the score is “deuce”.
-//A game is won by the first player to have won at least four points in total and at least two points more than the opponent.
+// Tennis Game
+
+// Implement a simple tennis game
+
+// Rules:
+
+// - Scores from zero to three points are described as “love”, “fifteen”, “thirty”, and “forty” respectively.
+// - If at least three points have been scored by each side and a player has one more point than his opponent, the score of the game is “advantage” for the player in the lead.
+// - If at least three points have been scored by each player, and the scores are equal, the score is “deuce”.
+// - A game is won by the first player to have won at least four points in total and at least two points more than the opponent.
 
 public class Game {
 
@@ -27,6 +30,7 @@ public class Game {
 
 		int setsInMatch = 0;
 		Set set[] = null;
+		int casualNumber;
 
 		// Inizio del match (Nella sua parte di vista)
 
@@ -46,14 +50,7 @@ public class Game {
 			String name = null;
 			matchView.setNamePlayerView();
 			name = insertPlayerName();
-			if (i==0)
-			{
-				players[i].setName("a");
-			}
-			else
-			{
-				players[i].setName("b");
-			}
+			players[i].setName(name);
 			name = null;
 		}
 
@@ -61,15 +58,13 @@ public class Game {
 
 		for (int i=0; i<setsInMatch; i++)
 		{
-			System.out.println("Set # " + (i+1));
-			int j = i;
+			matchView.numberSet(i);
 			boolean exit = false;
 			do
 			{
-				j=i;
-				int x = (Math.random()<0.5) ? 0 : 1;
+				casualNumber = randomPointAssigner();
 				// Assegnazione punto
-				if (x==0)
+				if (casualNumber==0)
 				{
 					// Verifico se non è il punto  vittoria del set
 					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty"))
@@ -82,7 +77,7 @@ public class Game {
 					{
 						// False assegno il punto
 						players[0].point();
-						System.out.println("Punto per " + players[0].getName() +". ");
+						matchView.showPointPlayer(players[0]);
 					}
 				}
 				else
@@ -91,17 +86,16 @@ public class Game {
 					{
 						players[1].setWin(i);
 						exit = true;
-					
 					}
 					else
 					{
 						players[1].point();
-						System.out.println("Punto per " + players[1].getName() +". ");
+						matchView.showPointPlayer(players[1]);
 					}
 				}
 
-//				System.out.println(players[0].getName() + " "+ players[0].getPoint().toString() + " vs " + players[1].getName() + ": "+ players[1].getPoint().toString());
-				
+				matchView.aggiornamentoRisultato(players[0],players[1]);
+
 				if (players[0].getWin(i) == false || players[1].getWin(i) == false) // Non c'è un vincitore ancora, controlliamo il caso di paregigo
 				{
 					// Controllo del vantaggio nel caso spetti al giocatore 0
@@ -121,9 +115,9 @@ public class Game {
 					{
 						matchView.deuce();
 
-						int p = (Math.random()<0.5) ? 0 : 1;
+						casualNumber = randomPointAssigner();
 
-						if (p==0)
+						if (casualNumber==0)
 						{
 							players[0].vantaggio();
 						}
@@ -136,33 +130,31 @@ public class Game {
 						{
 							players[0].setWin(i);
 							exit = true;
-		
-							System.out.println("Sulla parità ha vinto: " + players[0].getName());
+							matchView.deuceWinner(players[0]);
 						}
 						else if (players[1].getVantaggio() - players[0].getVantaggio() == 2)
 						{
 							players[1].setWin(i);
-							
-							System.out.println("Sulla parità ha vinto: " + players[1].getName());
+							exit = true;
+							matchView.deuceWinner(players[1]);
 						}
 						else if (players[0].getVantaggio() == 1 && players[1].getVantaggio() == 1)
 						{
+							// Reset della parità quando la differenza si riazzera
 							players[0].resetVantaggio();
 							players[1].resetVantaggio();
-							System.out.println("Reset della parità");
 						}	
 					}
 				}
-			
 			} while (exit==false);
 
 			if (players[0].getWin(i) == true)
 			{
-				System.out.println("Set vinto da player 0");
+				matchView.winSet(players[0]);
 			}
 			else
 			{
-				System.out.println("Set vinto da player 1");
+				matchView.winSet(players[1]);
 			}
 		}
 		matchView.end();
@@ -172,41 +164,37 @@ public class Game {
 	{
 		int n = 1;
 
-		//		do {
-		//			try {
-		//				n = Integer.parseInt(br.readLine());
-		//				if (n<0 || n>5) {
-		//					matchView.error("Valore non corretto");
-		//				}
-		//			}
-		//			catch (Exception e)
-		//			{
-		//				matchView.error(e);
-		//			}
-		//		}	while  (n<0 || n>5);
+		do {
+			try {
+				n = Integer.parseInt(br.readLine());
+				if (n<0 || n>5) {
+					matchView.error("Valore non corretto");
+				}
+			}
+			catch (Exception e)
+			{
+				matchView.error(e);
+			}
+		}	while  (n<0 || n>5);
 
 		return n;
 	}
 
 	public static String insertPlayerName() {
-
 		String name = null;
 
-		//		try {
-		//			name = br.readLine();
-		//		} catch (IOException e) {
-		//			matchView.error(e);
-		//		}
-		name="prova";
+		try {
+			name = br.readLine();
+		} catch (IOException e) {
+			matchView.error(e);
+		}
 
 		return name;
 	}
 
 	public static String insertPlayerSurname() {
-
 		try {
 			br.readLine();
-
 		} catch (IOException e) {
 			matchView.error(e);
 		}
@@ -214,5 +202,8 @@ public class Game {
 		return br.toString();
 	}
 
-
+	public static int randomPointAssigner()
+	{
+		return (Math.random()<0.5) ? 0 : 1;
+	}
 }
