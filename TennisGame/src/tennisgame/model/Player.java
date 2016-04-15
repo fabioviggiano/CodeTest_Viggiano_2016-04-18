@@ -58,4 +58,9 @@ public class Player {
 	{
 		win[i] = true;
 	}
+	
+	public boolean getWin(int i)
+	{
+		return win[i];
+	}
 }

@@ -9,30 +9,15 @@ import tennisgame.view.*;
 
 public class Game {
 
-	public static Match matchView;
-	private static Player players[] = new Player[2];
-
-	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-	// TODO
-
-	// 1. HashCode - Equals 
-
-	// 2. Implementare enum punti
-
-	// 3. Conteggio punti
-
-	// 4. Metodo per la creazione di un sistema di assegnazione punti
-
-	// 5. Evolvere da console a frontend
+	public static Match matchView;	// Vista del Match
+	private static Player players[] = new Player[2]; // Due giocatori
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // Variabile per la lettura di input
 
 	public static void main(String[] args) {
 
 		// Variabili
 
-		int numberSet = 0;
 		int setsInMatch = 0;
-
 		Set set[] = null;
 
 		// Inizio del match (Nella sua parte di vista)
@@ -53,7 +38,14 @@ public class Game {
 			String name = null;
 			matchView.setNamePlayerView();
 			name = insertPlayerName();
-			players[i].setName("a");
+			if (i==0)
+			{
+				players[i].setName("a");
+			}
+			else
+			{
+				players[i].setName("b");
+			}
 			name = null;
 		}
 
@@ -61,53 +53,88 @@ public class Game {
 
 		for (int i=0; i<setsInMatch; i++)
 		{
-			System.out.println("Set numero: " + i);
+			System.out.println("Set # " + (i+1));
+			int j = i;
+			boolean exit = false;
 			do
 			{
+				j=i;
 				int x = (Math.random()<0.5) ? 0 : 1;
+				// Assegnazione punto
 				if (x==0)
 				{
-					players[0].point();
+					// Verifico se non è il punto  vittoria del set
+					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty"))
+					{
+						// True allora assegno la vittoria
+						players[0].setWin(i);
+						exit = true;
+					}
+					else
+					{
+						// False assegno il punto
+						players[0].point();
+						System.out.println("Punto per " + players[0].getName() +". ");
+					}
 				}
 				else
 				{
-					players[1].point();
-				}
-				
-//				System.out.println("Giocatore 0: " + players[0].getPoint().toString());
-//				
-//				System.out.println("Giocatore 1: " + players[1].getPoint().toString());
-				
-				// Controllo del vantaggio nel caso spetti al giocatore 0
-				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
-				{
-					matchView.vantaggio(players[0]);
-				}
-
-				// Controllo del vantaggio nel caso spetti al giocatore 1
-				if (players[1].getPoint().toString().equals("forty") && players[0].getPoint().toString().equals("thirty"))
-				{
-					matchView.vantaggio(players[1]);
-				}
-
-				// Controllo in caso d parità
-				if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
-				{
-					matchView.deuce();
-
-					int p = (Math.random()<0.5) ? 0 : 1;
-					if (p==0)
+					if (players[1].getPoint().toString().equals("forty") && !players[0].getPoint().toString().equals("forty"))
 					{
-						players[0].vantaggio();
-						
+						players[1].setWin(i);
+						exit = true;
+					
+					}
+					else
+					{
+						players[1].point();
+						System.out.println("Punto per " + players[1].getName() +". ");
+					}
+				}
+
+//				System.out.println(players[0].getName() + " "+ players[0].getPoint().toString() + " vs " + players[1].getName() + ": "+ players[1].getPoint().toString());
+				
+				if (players[0].getWin(i) == false || players[1].getWin(i) == false) // Non c'è un vincitore ancora, controlliamo il caso di paregigo
+				{
+					// Controllo del vantaggio nel caso spetti al giocatore 0
+					if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
+					{
+						matchView.vantaggio(players[0]);
+					}
+
+					// Controllo del vantaggio nel caso spetti al giocatore 1
+					if (players[1].getPoint().toString().equals("forty") && players[0].getPoint().toString().equals("thirty"))
+					{
+						matchView.vantaggio(players[1]);
+					}
+
+					// Controllo in caso d parità e vantaggi
+					if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
+					{
+						matchView.deuce();
+
+						int p = (Math.random()<0.5) ? 0 : 1;
+
+						if (p==0)
+						{
+							players[0].vantaggio();
+						}
+						else
+						{
+							players[1].vantaggio();
+						}
+
 						if (players[0].getVantaggio() - players[1].getVantaggio() == 2)
 						{
 							players[0].setWin(i);
+							exit = true;
+		
 							System.out.println("Sulla parità ha vinto: " + players[0].getName());
 						}
 						else if (players[1].getVantaggio() - players[0].getVantaggio() == 2)
 						{
 							players[1].setWin(i);
+							
 							System.out.println("Sulla parità ha vinto: " + players[1].getName());
 						}
 						else if (players[0].getVantaggio() == 1 && players[1].getVantaggio() == 1)
@@ -115,34 +142,21 @@ public class Game {
 							players[0].resetVantaggio();
 							players[1].resetVantaggio();
 							System.out.println("Reset della parità");
-						}
+						}	
 					}
-					else
-					{
-						players[1].point();
-					}
-					
-					
 				}
-			} while (!(players[0].getPoint().toString().equals("forty")) || !(players[1].getPoint().toString().equals("forty")));
 			
-			// Aggiunta condizione vittoria sul vantaggio e parità procrastinata
-			
-			if (players[0].getPoint().toString().equals("forty"))
+			} while (exit==false);
+
+			if (players[0].getWin(i) == true)
 			{
-				players[0].setWin(i);
-				System.out.println("Set vinto da:  " + players[0].getName());
-				players[0].resetPoint();
+				System.out.println("Set vinto da player 0");
 			}
-			
-			if (players[1].getPoint().toString().equals("forty"))
+			else
 			{
-				players[1].setWin(i);
-				System.out.println("Set vinto da:  " + players[1].getName());
-				players[1].resetPoint();
+				System.out.println("Set vinto da player 1");
 			}
 		}
-
 		matchView.end();
 	}
 
