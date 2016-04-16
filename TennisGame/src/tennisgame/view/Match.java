@@ -1,51 +1,40 @@
 package tennisgame.view;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import tennisgame.model.Player;
 
 public class Match {
-	
 	// Classe Match - Individuata per le viste da fornire all' utente
-	
+
 	// I metodi cercano di descrivere il loro obiettivo in fase di lancio
-	
+
 	// Al suo interno sono contenute al momento output a termiale per indicare
 	// l' attivita' in corso
-	
+
 	// Inizio del match
-	public void start()
-	{
+	public void start() {
 		System.out.println("Partenza");
 	}
 
 	// Fine del match
-	public void end()
-	{
+	public void end() {
 		System.out.println("Fine del match");
 	}
-	
+
 	// Visualizza messaggio di inserimento numero set
-	public void setNumberSet()
-	{
+	public void setNumberSet() {
 		System.out.println("Quanti set vuoi giocare? (Valore minimo 1 - Valore massimo 5");
 	}
-	
+
 	// Visualizza messaggio di visualizzazione numero di viste
-	public void setNamePlayerView()
-	{
+	public void setNamePlayerView() {
 		System.out.println("Inserire nome:");
 	}
-	
+
 	// Visualizza messaggio di eventuale errore intercettato come stringa
 	// Implementazione futura la creazione nel controller di una classe
 	// ereditata dalla classe exception per creare eccezioni utente anzichè
-	// l' utilizzo delle stringhe 
-	
-	public void error(String error)
-	{
+	// l' utilizzo delle stringhe
+
+	public void error(String error) {
 		System.out.println(error);
 	}
 
@@ -54,23 +43,24 @@ public class Match {
 	}
 
 	public void deuce() {
-		System.out.println("Siamo in parità (Deuce)! 40-40");
+		System.out.println("** Siamo in parità (Deuce)! 40-40");
 	}
-	
+
 	public void vantaggio(Player p) {
-		System.out.println("Vantaggio per " + p.getName());
+		System.out.println("++ Vantaggio per " + p.getName());
 	}
 
 	public void showPointPlayer(Player p) {
-		System.out.println("Punto per " + p.getName() +". ");
+		System.out.println("-- Punto per " + p.getName() + ". ");
 	}
 
 	public void winSet(Player player) {
-		System.out.println("Set vinto da " + player.getName() +". ");
+		System.out.println("Set vinto da " + player.getName() + ". ");
 	}
 
 	public void aggiornamentoRisultato(Player player, Player player2) {
-		System.out.println("| " + player.getName() + ": " + player.getPoint().toString() + "| vs |" + player2.getName() + ": "+ player2.getPoint().toString() + " |");
+		System.out.println("| " + player.getName() + ": " + player.getPoint().toString() + "| vs |" + player2.getName()
+				+ ": " + player2.getPoint().toString() + " |");
 	}
 
 	public void deuceWinner(Player player) {
@@ -79,5 +69,9 @@ public class Match {
 
 	public void numberSet(int i) {
 		System.out.println("-- Set numero: " + i + " --");
-	}	
+	}
+
+	public void resetVantaggio() {
+		System.out.println("Vantaggio da deuce azzerato.");
+	}
 }

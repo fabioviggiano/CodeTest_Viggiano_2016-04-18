@@ -3,10 +3,7 @@ package tennisgame.model;
 public class Point {
 
 	public enum Name {
-		love, 
-		fifteen, 
-		thirty, 
-		forty
+		love, fifteen, thirty, forty
 	};
 
 	public int i = 0;
@@ -14,27 +11,32 @@ public class Point {
 	public Name name = null;
 
 	public Point() {
-		i=0;
+		i = 0;
 		vantaggio = 0;
 		name = name.love;
 	}
 
 	public Name increasePoint() {
 
-		i = i+15;
+		i = i + 15;
 
 		switch (i) {
-		
-			case 15:  name = name.fifteen;
+
+		case 15:
+			name = name.fifteen;
 			break;
-			
-			case 30:  name = name.thirty;
+
+		case 30:
+			name = name.thirty;
 			break;
-			
-			case 45:  name = name.forty;;
+
+		case 45:
+			name = name.forty;
+			;
 			break;
-			
-		    default: name = null;
+
+		default:
+			name = null;
 			break;
 		}
 
@@ -48,30 +50,26 @@ public class Point {
 	public String getName() {
 		return name.toString();
 	}
-	
-	public int getVantaggio()
-	{
+
+	public int getVantaggio() {
 		return vantaggio;
 	}
-	
-	public int getOrdinalPoint()
-	{
+
+	public int getOrdinalPoint() {
 		return name.ordinal();
 	}
 
-	public void increaseVantaggio()
-	{
+	public void increaseVantaggio() {
 		vantaggio++;
 	}
-	public void resetVantaggio()
-	{
-		vantaggio=0;
+
+	public void resetVantaggio() {
+		vantaggio = 0;
 	}
-	
+
 	public void resetPoint() {
-		i=0;
+		i = 0;
 		name = name.love;
 		vantaggio = 0;
 	}
 }
-

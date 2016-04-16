@@ -29,7 +29,6 @@ public class Game {
 		// Variabili
 
 		int setsInMatch = 0;
-		Set set[] = null;
 		int casualNumber;
 
 		// Inizio del match 
@@ -46,18 +45,21 @@ public class Game {
 
 		for (int i=0; i<players.length; i++)
 		{
-			players[i] = new Player();
-			String name = null;
-			matchView.setNamePlayerView();
-			name = insertPlayerName();
-			players[i].setName(name);
+			try {
+				players[i] = new Player();
+				String name = null;
+				matchView.setNamePlayerView();
+				name = insertPlayerName();
+				players[i].setName(name);
+			} catch (Exception e) {
+				matchView.error(e);
+			}
 		}
 
-		set = new Set[setsInMatch];
-
 		for (int i=0; i<setsInMatch; i++)
-		{
-			matchView.numberSet(i);
+		{				
+			players[0].resetPoint();
+			players[1].resetPoint();
 			boolean exitFromSet = false;
 			do
 			{
@@ -67,8 +69,8 @@ public class Game {
 				{
 					// Verifico se non è il punto  vittoria del set ossia
 					// A game is won by the first player to have won at least four points in total and at least two points more than the opponent.
-					
-					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty"))
+
+					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("thirty"))
 					{
 						// True allora assegno la vittoria
 						players[0].setWin(i);
@@ -95,9 +97,15 @@ public class Game {
 						matchView.showPointPlayer(players[1]);
 					}
 				}
-
-				matchView.aggiornamentoRisultato(players[0],players[1]);
-
+				
+				// Aggiorno il risultato solo se non è stato ancora decretato un vincitore,
+				// Nel caso il giocatore x sia a 40 ed ha fatto l' ultimo putno resta valido il 40 precedente ma non è necessario
+				// aggiornare la vista
+				if (exitFromSet == false) 
+				{
+					matchView.aggiornamentoRisultato(players[0],players[1]);
+				}
+					
 				if (players[0].getWin(i) == false || players[1].getWin(i) == false) // Non c'è un vincitore ancora, controlliamo il caso di paregigo
 				{
 					// Controllo del vantaggio nel caso spetti al giocatore 0
@@ -115,24 +123,28 @@ public class Game {
 					// Controllo in caso d parità e vantaggi
 					while (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty") && (exitFromSet==false))
 					{
-						matchView.deuce();
+						if ((players[0].getVantaggio()!=1) || (players[0].getVantaggio() != 1))
+						{
+						 matchView.deuce();
+						}
+						// Assegnazione punteggio sul vantaggio
 
-								// Assegnazione punteggio sul vantaggio
-						
-								casualNumber = randomPointAssigner();
+						casualNumber = randomPointAssigner();
 
-								if (casualNumber==0)
-								{
-									players[0].vantaggio();
-								}
-								else
-								{
-									players[1].vantaggio();
-								}
+						if (casualNumber==0)
+						{
+							players[0].vantaggio();
+							matchView.vantaggio(players[0]);
+						}
+						else
+						{
+							players[1].vantaggio();
+							matchView.vantaggio(players[1]);
+						}
 
 						// Controlo vantaggi
-								
-								
+
+
 						// Caso vittoria del player 0 
 						if (players[0].getVantaggio() - players[1].getVantaggio() == 2)
 						{
@@ -153,6 +165,7 @@ public class Game {
 							// Reset della parità quando la differenza si riazzera
 							players[0].resetVantaggio();
 							players[1].resetVantaggio();
+							matchView.resetVantaggio();
 						}	
 					} 
 				}
