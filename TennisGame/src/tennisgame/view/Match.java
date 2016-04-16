@@ -19,16 +19,6 @@ public class Match {
 		System.out.println("Fine del match");
 	}
 
-	// Visualizza messaggio di inserimento numero set
-	public void setNumberSet() {
-		System.out.println("Quanti set vuoi giocare? (Valore minimo 1 - Valore massimo 5");
-	}
-
-	// Visualizza messaggio di visualizzazione numero di viste
-	public void setNamePlayerView() {
-		System.out.println("Inserire nome:");
-	}
-
 	// Visualizza messaggio di eventuale errore intercettato come stringa
 	// Implementazione futura la creazione nel controller di una classe
 	// ereditata dalla classe exception per creare eccezioni utente anzichè
@@ -40,31 +30,6 @@ public class Match {
 
 	public void error(Exception e) {
 		System.err.println("Intercettata eccezione: " + e.getMessage());
-	}
-
-	public void deuce() {
-		System.out.println("** Siamo in parità (Deuce)! 40-40");
-	}
-
-	public void vantaggio(Player p) {
-		System.out.println("++ Vantaggio per " + p.getName());
-	}
-
-	public void showPointPlayer(Player p) {
-		System.out.println("-- Punto per " + p.getName() + ". ");
-	}
-
-	public void winSet(Player player) {
-		System.out.println("Set vinto da " + player.getName() + ". ");
-	}
-
-	public void aggiornamentoRisultato(Player player, Player player2) {
-		System.out.println("| " + player.getName() + ": " + player.getPoint().toString() + "| vs |" + player2.getName()
-				+ ": " + player2.getPoint().toString() + " |");
-	}
-
-	public void deuceWinner(Player player) {
-		System.out.println("Sulla parità ha vinto: " + player.getName());
 	}
 
 	public void numberSet(int i) {

@@ -10,12 +10,14 @@ public class Point {
 	private int vantaggio = 0;
 	public Name name = null;
 
+	@SuppressWarnings("static-access")
 	public Point() {
 		i = 0;
 		vantaggio = 0;
 		name = name.love;
 	}
 
+	@SuppressWarnings("static-access")
 	public Name increasePoint() {
 
 		i = i + 15;

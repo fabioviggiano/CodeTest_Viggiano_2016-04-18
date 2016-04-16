@@ -21,6 +21,8 @@ import tennisgame.view.*;
 public class Game {
 
 	public static Match matchView;	// Vista del Match
+	public static Score scoreView;
+	public static UserQuestion userQuestion;
 	private static Player players[] = new Player[2]; // Due giocatori
 	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // Variabile per la lettura di input
 
@@ -34,11 +36,12 @@ public class Game {
 		// Inizio del match 
 
 		matchView  = new Match();
-
+		scoreView = new Score();
+		userQuestion = new UserQuestion();
 		do
 		{
 			// L' oggetto matchView interviene quando è necessario dialogare visualmente con l' utente
-			matchView.setNumberSet(); 
+			userQuestion.setNumberSet(); 
 			// Il controller insertNumeberSet ritornerà al game il numero di set da giocare
 			setsInMatch = insertNumberSet();
 		} while (setsInMatch == 0);
@@ -48,7 +51,7 @@ public class Game {
 			try {
 				players[i] = new Player();
 				String name = null;
-				matchView.setNamePlayerView();
+				userQuestion.setNamePlayerView();
 				name = insertPlayerName();
 				players[i].setName(name);
 			} catch (Exception e) {
@@ -80,7 +83,7 @@ public class Game {
 					{
 						// False assegno il punto
 						players[0].point();
-						matchView.showPointPlayer(players[0]);
+						scoreView.showPointPlayer(players[0]);
 					}
 				}
 				else
@@ -94,7 +97,7 @@ public class Game {
 					else
 					{
 						players[1].point();
-						matchView.showPointPlayer(players[1]);
+						scoreView.showPointPlayer(players[1]);
 					}
 				}
 				
@@ -103,7 +106,7 @@ public class Game {
 				// aggiornare la vista
 				if (exitFromSet == false) 
 				{
-					matchView.aggiornamentoRisultato(players[0],players[1]);
+					scoreView.aggiornamentoRisultato(players[0],players[1]);
 				}
 					
 				if (players[0].getWin(i) == false || players[1].getWin(i) == false) // Non c'è un vincitore ancora, controlliamo il caso di paregigo
@@ -111,13 +114,13 @@ public class Game {
 					// Controllo del vantaggio nel caso spetti al giocatore 0
 					if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("thirty"))
 					{
-						matchView.vantaggio(players[0]);
+						scoreView.vantaggio(players[0]);
 					}
 
 					// Controllo del vantaggio nel caso spetti al giocatore 1
 					if (players[1].getPoint().toString().equals("forty") && players[0].getPoint().toString().equals("thirty"))
 					{
-						matchView.vantaggio(players[1]);
+						scoreView.vantaggio(players[1]);
 					}
 
 					// Controllo in caso d parità e vantaggi
@@ -125,7 +128,7 @@ public class Game {
 					{
 						if ((players[0].getVantaggio()!=1) || (players[0].getVantaggio() != 1))
 						{
-						 matchView.deuce();
+							scoreView.deuce();
 						}
 						// Assegnazione punteggio sul vantaggio
 
@@ -134,12 +137,12 @@ public class Game {
 						if (casualNumber==0)
 						{
 							players[0].vantaggio();
-							matchView.vantaggio(players[0]);
+							scoreView.vantaggio(players[0]);
 						}
 						else
 						{
 							players[1].vantaggio();
-							matchView.vantaggio(players[1]);
+							scoreView.vantaggio(players[1]);
 						}
 
 						// Controlo vantaggi
@@ -150,14 +153,14 @@ public class Game {
 						{
 							players[0].setWin(i);
 							exitFromSet = true;
-							matchView.deuceWinner(players[0]);
+							scoreView.deuceWinner(players[0]);
 						}
 						// Caso vittoria del player 1
 						else if (players[1].getVantaggio() - players[0].getVantaggio() == 2)
 						{
 							players[1].setWin(i);
 							exitFromSet = true;
-							matchView.deuceWinner(players[1]);
+							scoreView.deuceWinner(players[1]);
 						}
 						// Caso di riazzarmento del vantaggio
 						else if (players[0].getVantaggio() == 1 && players[1].getVantaggio() == 1)
@@ -173,11 +176,11 @@ public class Game {
 
 			if (players[0].getWin(i) == true)
 			{
-				matchView.winSet(players[0]);
+				scoreView.winSet(players[0]);
 			}
 			else
 			{
-				matchView.winSet(players[1]);
+				scoreView.winSet(players[1]);
 			}
 		}
 		matchView.end();
