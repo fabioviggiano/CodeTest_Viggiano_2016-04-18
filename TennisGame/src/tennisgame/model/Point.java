@@ -34,11 +34,9 @@ public class Point {
 
 		case 45:
 			name = name.forty;
-			;
 			break;
 
 		default:
-			name = null;
 			break;
 		}
 

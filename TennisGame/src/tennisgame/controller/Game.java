@@ -100,7 +100,7 @@ public class Game {
 						scoreView.showPointPlayer(players[1]);
 					}
 				}
-				
+
 				// Aggiorno il risultato solo se non è stato ancora decretato un vincitore,
 				// Nel caso il giocatore x sia a 40 ed ha fatto l' ultimo putno resta valido il 40 precedente ma non è necessario
 				// aggiornare la vista
@@ -108,7 +108,7 @@ public class Game {
 				{
 					scoreView.aggiornamentoRisultato(players[0],players[1]);
 				}
-					
+				
 				if (players[0].getWin(i) == false || players[1].getWin(i) == false) // Non c'è un vincitore ancora, controlliamo il caso di paregigo
 				{
 					// Controllo del vantaggio nel caso spetti al giocatore 0
