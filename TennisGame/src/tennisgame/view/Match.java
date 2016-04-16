@@ -70,7 +70,7 @@ public class Match {
 	}
 
 	public void aggiornamentoRisultato(Player player, Player player2) {
-		System.out.println(player.getName() + " " + player.getPoint().toString() + " vs " + player2.getName() + ": "+ player2.getPoint().toString());
+		System.out.println("| " + player.getName() + ": " + player.getPoint().toString() + "| vs |" + player2.getName() + ": "+ player2.getPoint().toString() + " |");
 	}
 
 	public void deuceWinner(Player player) {
@@ -78,6 +78,6 @@ public class Match {
 	}
 
 	public void numberSet(int i) {
-		System.out.println("SET NUMERO " + i );
+		System.out.println("-- Set numero: " + i + " --");
 	}	
 }

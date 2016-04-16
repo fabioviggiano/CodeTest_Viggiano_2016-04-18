@@ -39,6 +39,11 @@ public class Player {
 		return point.getName();
 	}
 	
+	public int getOrdinalPoint()
+	{
+		return point.getOrdinalPoint();
+	}
+	
 	public void vantaggio()
 	{
 		point.increaseVantaggio();

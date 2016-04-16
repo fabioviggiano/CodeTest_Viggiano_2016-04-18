@@ -53,6 +53,11 @@ public class Point {
 	{
 		return vantaggio;
 	}
+	
+	public int getOrdinalPoint()
+	{
+		return name.ordinal();
+	}
 
 	public void increaseVantaggio()
 	{

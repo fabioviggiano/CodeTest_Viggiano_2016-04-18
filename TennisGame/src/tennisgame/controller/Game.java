@@ -32,7 +32,7 @@ public class Game {
 		Set set[] = null;
 		int casualNumber;
 
-		// Inizio del match (Nella sua parte di vista)
+		// Inizio del match 
 
 		matchView  = new Match();
 
@@ -51,7 +51,6 @@ public class Game {
 			matchView.setNamePlayerView();
 			name = insertPlayerName();
 			players[i].setName(name);
-			name = null;
 		}
 
 		set = new Set[setsInMatch];
@@ -59,19 +58,21 @@ public class Game {
 		for (int i=0; i<setsInMatch; i++)
 		{
 			matchView.numberSet(i);
-			boolean exit = false;
+			boolean exitFromSet = false;
 			do
 			{
 				casualNumber = randomPointAssigner();
 				// Assegnazione punto
 				if (casualNumber==0)
 				{
-					// Verifico se non è il punto  vittoria del set
-					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty"))
+					// Verifico se non è il punto  vittoria del set ossia
+					// A game is won by the first player to have won at least four points in total and at least two points more than the opponent.
+					
+					if (players[0].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty") && !players[1].getPoint().toString().equals("forty"))
 					{
 						// True allora assegno la vittoria
 						players[0].setWin(i);
-						exit = true;
+						exitFromSet = true;
 					}
 					else
 					{
@@ -82,10 +83,11 @@ public class Game {
 				}
 				else
 				{
-					if (players[1].getPoint().toString().equals("forty") && !players[0].getPoint().toString().equals("forty"))
+					// Per diversificare l' utilizzo di classi, metodi ecc si è deciso in questo caso di effettuare il confronto sul valore "ordinale dell' enum"
+					if (players[1].getPoint().toString().equals("forty") && !(players[0].getOrdinalPoint()==3) && !(players[0].getOrdinalPoint()==2))
 					{
 						players[1].setWin(i);
-						exit = true;
+						exitFromSet = true;
 					}
 					else
 					{
@@ -111,42 +113,50 @@ public class Game {
 					}
 
 					// Controllo in caso d parità e vantaggi
-					if (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty"))
+					while (players[0].getPoint().toString().equals("forty") && players[1].getPoint().toString().equals("forty") && (exitFromSet==false))
 					{
 						matchView.deuce();
 
-						casualNumber = randomPointAssigner();
+								// Assegnazione punteggio sul vantaggio
+						
+								casualNumber = randomPointAssigner();
 
-						if (casualNumber==0)
-						{
-							players[0].vantaggio();
-						}
-						else
-						{
-							players[1].vantaggio();
-						}
+								if (casualNumber==0)
+								{
+									players[0].vantaggio();
+								}
+								else
+								{
+									players[1].vantaggio();
+								}
 
+						// Controlo vantaggi
+								
+								
+						// Caso vittoria del player 0 
 						if (players[0].getVantaggio() - players[1].getVantaggio() == 2)
 						{
 							players[0].setWin(i);
-							exit = true;
+							exitFromSet = true;
 							matchView.deuceWinner(players[0]);
 						}
+						// Caso vittoria del player 1
 						else if (players[1].getVantaggio() - players[0].getVantaggio() == 2)
 						{
 							players[1].setWin(i);
-							exit = true;
+							exitFromSet = true;
 							matchView.deuceWinner(players[1]);
 						}
+						// Caso di riazzarmento del vantaggio
 						else if (players[0].getVantaggio() == 1 && players[1].getVantaggio() == 1)
 						{
 							// Reset della parità quando la differenza si riazzera
 							players[0].resetVantaggio();
 							players[1].resetVantaggio();
 						}	
-					}
+					} 
 				}
-			} while (exit==false);
+			} while (exitFromSet==false);
 
 			if (players[0].getWin(i) == true)
 			{
