@@ -11,18 +11,15 @@ public class Match {
 
 	// Inizio del match
 	public void start() {
-		System.out.println("Partenza");
+		System.out.println("----- Inizio del match ----");
 	}
 
 	// Fine del match
 	public void end() {
-		System.out.println("Fine del match");
+		System.out.println("----- Fine del match ----");
 	}
 
 	// Visualizza messaggio di eventuale errore intercettato come stringa
-	// Implementazione futura la creazione nel controller di una classe
-	// ereditata dalla classe exception per creare eccezioni utente anzichè
-	// l' utilizzo delle stringhe
 
 	public void error(String error) {
 		System.out.println(error);
@@ -33,7 +30,7 @@ public class Match {
 	}
 
 	public void numberSet(int i) {
-		System.out.println("-- Set numero: " + i + " --");
+		System.out.println("  -- Set numero: " + i + " --");
 	}
 
 	public void resetVantaggio() {

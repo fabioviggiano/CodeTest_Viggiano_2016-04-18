@@ -5,11 +5,11 @@ import tennisgame.model.Player;
 public class Score extends Match {
 
 	public void deuce() {
-		System.out.println("** Siamo in parità (Deuce)! 40-40");
+		System.out.println("** Siamo in deuce! 40-40");
 	}
-	
+
 	public void vantaggio(Player p) {
-		System.out.println("++ Vantaggio per " + p.getName());
+		System.out.println("++ Vantaggio per " + p.getName() + "| +1");
 	}
 
 	public void showPointPlayer(Player p) {
@@ -26,8 +26,42 @@ public class Score extends Match {
 	}
 
 	public void deuceWinner(Player player) {
-		System.out.println("Sulla parità ha vinto: " + player.getName());
+		System.out.println("Sul deuce ha vinto: " + player.getName());
 	}
 
-	
+	public void showWinnerSets(Player player1, Player player2, int setsInMatch) {
+		System.out.print("-- Sets --");
+		for (int i = 0; i < setsInMatch; i++) {
+			System.out.print(" " + (i + 1) + "");
+		}
+		System.out.println("");
+
+		System.out.print(player1.getName());
+
+		System.out.print("   ");
+
+		for (int i = 0; i < setsInMatch; i++) {
+			if (player1.getWin(i) == true) {
+				System.out.print("+");
+			} else {
+				System.out.print("-");
+			}
+		}
+
+		System.out.println("");
+
+		System.out.print(player2.getName());
+
+		System.out.print("   ");
+
+		for (int i = 0; i < setsInMatch; i++) {
+			if (player2.getWin(i) == true) {
+				System.out.print("+");
+			} else {
+				System.out.print("-");
+			}
+		}
+
+		System.out.println("");
+	}
 }
