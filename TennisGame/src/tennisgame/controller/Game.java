@@ -3,6 +3,8 @@ package tennisgame.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import tennisgame.model.*;
 import tennisgame.view.*;
@@ -25,13 +27,10 @@ public class Game {
 	public static UserQuestion userQuestion; // Vista per l' input utente
 	private static Player players[] = new Player[2]; // Due giocatori necessari
 														// alla partita
-	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // Variabile
-																								// per
-																								// la
-																								// lettura
-																								// di
-																								// input
+	private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); // Variabile per la lettura d input
 
+	private static final Logger log= Logger.getLogger( Game.class.getName() );
+	
 	public static void main(String[] args) {
 
 		// Variabili
@@ -49,9 +48,11 @@ public class Game {
 		matchView.start();
 
 		do {
+			// log.log( Level.INFO, "Scelta del numero di set da giocare\n");
 			// L' oggetto matchView interviene quando è necessario dialogare
 			// visualmente con l' utente
 			userQuestion.setNumberSet();
+
 			// Il controller insertNumeberSet ritornerà al game il numero di set
 			// da giocare
 			setsInMatch = insertNumberSet();
@@ -59,6 +60,7 @@ public class Game {
 
 		for (int i = 0; i < players.length; i++) {
 			try {
+				// log.log( Level.INFO, "Scelta giocatori");
 				players[i] = new Player();
 				String name = null;
 				userQuestion.setNamePlayerView();
@@ -75,6 +77,7 @@ public class Game {
 			boolean winSet = false;
 			do {
 				casualNumber = randomPointAssigner();
+				//log.log( Level.INFO, "Assegnazione casuale del valore 0/1 ad uno dei 2 giocatori");
 				// Assegnazione punto
 				if (casualNumber == 0) {
 					// Verifico se non è il punto vittoria del set ossia
@@ -123,6 +126,9 @@ public class Game {
 					// Controllo in caso d parità e vantaggi
 					while (players[0].getPoint().toString().equals("forty")
 							&& players[1].getPoint().toString().equals("forty") && (winSet == false)) {
+						
+						// log.log( Level.INFO, "Parità\n");
+						
 						if ((players[0].getVantaggio() != 1) || (players[0].getVantaggio() != 1)) {
 							scoreView.deuce();
 						}
