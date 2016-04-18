@@ -106,8 +106,7 @@ public class Game {
 				if (winSet == false) {
 					// Nel caso il giocatore x sia a 40 ed ha fatto l' ultimo
 					// punto resta valido il 40 (forty) precedente ma non è
-					// necessario
-					// aggiornare la vista
+					// necessario aggiornare la vista
 
 					scoreView.aggiornamentoRisultato(players[0], players[1]);
 
@@ -176,8 +175,9 @@ public class Game {
 				scoreView.winSet(players[1]);
 			}
 
-			scoreView.showWinnerSets(players[0], players[1], setsInMatch);
 		}
+
+		scoreView.showWinnerSets(players[0], players[1], setsInMatch);
 		matchView.end();
 	}
 
